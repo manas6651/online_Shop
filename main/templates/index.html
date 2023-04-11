@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header__inner">
+                <a href="{% url 'info' %}">
+                    About us
+                </a>
+                <a href="{% url 'favpage' %}">
+                    Favorites
+                </a>
+                <a href="{% url 'cartpage' %}">
+                    Cart
+                </a>
+                {% if not user.is_authenticated %}
+                <a href="{% url 'sign_in' %}">
+                    Sign in
+                </a> <a href="{% url 'sign_up' %}">
+                    sign_up
+                    </a>
+                    {% else %}
+                <a href="{% url 'sign_up' %}">
+                    {{user.username}}
+                </a>
+                <a href="{% url 'logout' %}">
+                    выйти 
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    {% for i in messages %}
+        {{i}}
+    {% endfor %}    
+    <div class="container">
+        <div class="card__inner">
+            {% for i in Nike %}
+            <div class="card">
+                <img width="100%" src="{{i.image.url}}" alt="">
+                <h3><a href="{% url 'detail' i.id %}">{{i.title}}</a></h3>
+                <p>{{i.price}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+
+</html>

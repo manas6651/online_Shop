@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header__inner">
+                <a href="{% url 'main' %}">
+                    Main
+                </a>
+                <a href="{% url 'info' %}">
+                    About us
+                </a>
+                <a href="{% url 'favpage' %}">
+                    Favorites
+                </a>
+                <a href="{% url 'sign_up' %}">
+                    Sign up
+                </a>
+            </div>
+        </div>
+    </header>
+    {% if amount > 0 %}
+    <div class="container">
+        <div class="cart">
+            <div class="cart__left">
+                {% for i in product %}
+                <div class="product_row">
+                    <img src="{{i.image.url}}" alt="">
+                   <div>
+                    <h3><a href="{% url 'detail' i.id %}">{{i.title}}</a></h3>
+                    <p>{{i.price}}</p>
+                    <a href="{% url 'deleete' i.id %}">Delete</a>
+                   </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="cart_right">
+                <p>Итоговая цена:{{total_prise}}</p>
+                <p>Количесчтво товаров:{{amount}}</p>
+                <a href="{% url 'order' %}">Офформить заказ </a>
+            </div>
+        </div>
+    
+    </div>
+    {% else %}
+
+    <h1>Тут ничего нету </h1>
+
+    {% endif %}
+</body>
+
+</html>
