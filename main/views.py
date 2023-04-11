@@ -3,8 +3,8 @@ from .models import NewBalance, Images,Order,OrderItem
 from django.http import HttpResponseRedirect
 import uuid 
 from django.contrib.auth.decorators import login_required 
-from django.core.mail import send_mail
-# Create your views here.
+from services.main import order_data_sender_to_email
+
 
 def main(req):
     nike = NewBalance.objects.all()
@@ -99,8 +99,8 @@ def order(reqest):
                 product = i            
             )
             products.append(i)
-       
-  
+
+        order_data_sender_to_email(reqest.user, reqest.POST.get('address'), reqest.POST.get('phone_number'), reqest.POST.get('message'), products)
         cart_products = reqest.session.get('cart_products', [])
         cart_products = []
         reqest.session['cart_products'] = cart_products    
